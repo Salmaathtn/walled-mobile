@@ -2,6 +2,7 @@ import { StyleSheet, View, Text } from "react-native";
 import Button from "../../components/Button";
 import Input from "../../components/Input";
 import Amount from "../../components/Amount";
+import Dropdown from "../../components/Dropdown";
 
 
 function Transfer() {
@@ -9,7 +10,7 @@ function Transfer() {
   return (
     <View style={styles.container}>
 
-
+<Dropdown/>
       <Amount text="Amount" />
 
       <Input text="Notes" />
