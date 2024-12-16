@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
 import AntDesign from '@expo/vector-icons/AntDesign';
-import { SafeAreaView } from 'react-native-safe-area-context';
+
 
 const data = [
   { label: 'Byond Pay', value: '1' },
@@ -56,12 +56,13 @@ export default DropdownComponent;
 
 const styles = StyleSheet.create({
   dropdown: {
-    margin: 16,
+    marginVertical: 16,
+    paddingHorizontal: 30,
     height: 50,
     backgroundColor: 'white',
-    borderRadius: 12,
+    
     padding: 12,
-    shadowColor: '#000',
+    shadowColor: '#ededed',
     shadowOffset: {
       width: 0,
       height: 1,

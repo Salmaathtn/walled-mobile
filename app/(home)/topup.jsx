@@ -10,9 +10,9 @@ function Topup() {
   return (
     <View style={styles.container}>
 
-<Dropdown/>
-      <Amount text="Amount" />
 
+      <Amount text="Amount"  keyboardType="numeric" />
+      <Dropdown/>
       <Input text="Notes" />
     </View>
     
@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#f5f5f5",
     // alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "",
   
   },
 
