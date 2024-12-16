@@ -6,8 +6,8 @@ function Amount({ text }) {
     <View style={styles.container}>
       <Text style={styles.placeholder}>{text}</Text>
       <View style={styles.containerv2}>
-       IDR
-        <TextInput style={styles.Amount} />
+        IDR
+        <TextInput style={styles.Amount}  keyboardType="numeric"/>
       </View>
     </View>
   );
@@ -23,21 +23,22 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   containerv2: {
-  //flexWrap: "wrap",
+    //flexWrap: "wrap",
+
     flexDirection: "row",
     alignItems: "center",
-
   },
   placeholder: {
     color: "#B3b3b3",
   },
   Amount: {
+    flex: 1,
     borderBottomColor: "#B3B3B3",
     borderBottomWidth: 0.5,
     padding: 8,
     fontSize: 36,
+    fontWeight: "400",
    
-    
   },
 });
 
