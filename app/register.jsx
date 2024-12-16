@@ -13,6 +13,7 @@ import Input from "../components/Input";
 import { Link } from "expo-router";
 import Checkbox from "expo-checkbox";
 import { useState } from "react";
+//import { SafeAreaView} from "react-native-safe-area-context";
 
 export default function Register() {
   const [isSelected, setSelection] = useState(false);
@@ -20,8 +21,7 @@ export default function Register() {
   const termtext = `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing.
 
 Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop.
-
-Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.`;
+Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.`
   return (
     <View style={styles.container}>
       <Modal
@@ -35,7 +35,9 @@ Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
       >
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-            <Text style={styles.modalText}>{termtext}</Text>
+            <Text style={styles.modalText}>
+             {termtext}
+            </Text>
             <Pressable
               style={[styles.button, styles.buttonClose]}
               onPress={() => setModalVisible(!modalVisible)}
@@ -79,15 +81,10 @@ Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
           onValueChange={setSelection}
           style={styles.checkbox}
         />
-        <Text>
-          I have read and agree to the {""}
-          <Pressable
-            onPress={() => setModalVisible(!modalVisible)}
-            style={styles.linkText}
-          >
-            <Text style={styles.link}>Terms and Conditions *</Text>
-          </Pressable>
-        </Text>
+          <Text style={styles.tncText}>I have read and agreee to the </Text>
+        <Link href="/tnc">
+          <Text style={styles.tncLink}>Terms and Conditions</Text>
+        </Link>
       </View>
 
       <Button text="Register" />
@@ -119,9 +116,22 @@ const styles = StyleSheet.create({
     marginBottom: 30,
   },
   tnc: {
+    width: "100%",
     flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
+    alignItems: "flex-start",
+    justifyContent: "flext-start",
+    flexWrap: "nowrap",
+    textAlign: "left",
+    paddingTop: 10,
+    paddingBottom: 10,
+  },
+  tncText: {
+    marginLeft: 10,
+    fontSize: 12,
+  },
+  tncLink: {
+    color: "#19918F",
+    fontSize: 12,
   },
   title: {
     fontSize: 24,

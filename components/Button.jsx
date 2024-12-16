@@ -1,11 +1,14 @@
 import { Text, TouchableOpacity, StyleSheet } from "react-native"
 
-function Button({bgColor = "#19918F", text}){
-    return(
-      <TouchableOpacity style={{...styles.button, backgroundColor: bgColor}}>
-        <Text style={styles.buttonText}>{text}</Text>
-      </TouchableOpacity>
-    )
+function Button({ bgColor = "#19918F", text, handlePress = () => {} }) {
+  return (
+    <TouchableOpacity
+      onPress={handlePress}
+      style={{ ...styles.button, backgroundColor: bgColor }}
+    >
+      <Text style={styles.buttonText}>{text}</Text>
+    </TouchableOpacity>
+  );
 }
 
 const styles = StyleSheet.create({
@@ -16,6 +19,7 @@ const styles = StyleSheet.create({
     width: '100%',
     alignItems: 'center',
     marginBottom: 30,
+    marginTop: 30,
 
   },
   buttonText: {
