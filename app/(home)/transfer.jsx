@@ -2,15 +2,19 @@ import { StyleSheet, View, Text } from "react-native";
 import Button from "../../components/Button";
 import Input from "../../components/Input";
 import Amount from "../../components/Amount";
-import Dropdown from "../../components/Dropdown";
+
 
 function Transfer() {
  
   return (
     <View style={styles.container}>
-    <Dropdown/>
+
+
       <Amount text="Amount" />
+
+      <Input text="Notes" />
     </View>
+    
   );
 }
 export default Transfer;
@@ -19,10 +23,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#f5f5f5",
-    alignItems: "center",
+    // alignItems: "center",
     justifyContent: "center",
   
   },
+
   logo: {
     // width: 100,
     // height: 100,

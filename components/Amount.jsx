@@ -23,8 +23,9 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   containerv2: {
-   flexWrap: "wrap",
+  //flexWrap: "wrap",
     flexDirection: "row",
+    alignItems: "center",
 
   },
   placeholder: {
@@ -35,7 +36,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 0.5,
     padding: 8,
     fontSize: 36,
-    textAlign: "right"
+   
     
   },
 });

@@ -1,12 +1,51 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, View, TextInput, Image, Text } from "react-native";
+import {
+  StyleSheet,
+  View,
+  TextInput,
+  Image,
+  Text,
+  Modal,
+  Pressable,
+} from "react-native";
 import Button from "../components/Button";
 import Input from "../components/Input";
 import { Link } from "expo-router";
+import Checkbox from "expo-checkbox";
+import { useState } from "react";
 
 export default function Register() {
+  const [isSelected, setSelection] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
+  const termtext = `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing.
+
+Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop.
+
+Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.`;
   return (
     <View style={styles.container}>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          Alert.alert("Modal has been closed.");
+          setModalVisible(!modalVisible);
+        }}
+      >
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <Text style={styles.modalText}>{termtext}</Text>
+            <Pressable
+              style={[styles.button, styles.buttonClose]}
+              onPress={() => setModalVisible(!modalVisible)}
+            >
+              <Text style={styles.textStyle}>Hide Modal</Text>
+            </Pressable>
+          </View>
+        </View>
+      </Modal>
+
       <Image source={require("../assets/logo.png")} style={styles.logo} />
 
       <TextInput
@@ -28,18 +67,38 @@ export default function Register() {
         placeholderTextColor="#aaa"
         secureTextEntry={true}
       />
-        <TextInput
+      <TextInput
         style={styles.input}
         placeholder="Avatar url"
         placeholderTextColor="#aaa"
         secureTextEntry={true}
       />
+      <View style={styles.tnc}>
+        <Checkbox
+          value={isSelected}
+          onValueChange={setSelection}
+          style={styles.checkbox}
+        />
+        <Text>
+          I have read and agree to the {""}
+          <Pressable
+            onPress={() => setModalVisible(!modalVisible)}
+            style={styles.linkText}
+          >
+            <Text style={styles.link}>Terms and Conditions *</Text>
+          </Pressable>
+        </Text>
+      </View>
 
       <Button text="Register" />
 
-      <Text>Have account? <Link style={styles.link}href={"/"}> Login here</Link>
+      <Text>
+        Have account?{" "}
+        <Link style={styles.link} href={"/"}>
+          {" "}
+          Login here
+        </Link>
       </Text>
-      
 
       <StatusBar style="auto" hidden />
     </View>
@@ -58,6 +117,11 @@ const styles = StyleSheet.create({
     // width: 100,
     // height: 100,
     marginBottom: 30,
+  },
+  tnc: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
   },
   title: {
     fontSize: 24,
@@ -89,6 +153,44 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   link: {
-    color: "#4DB6AC"
-  }
+    color: "#4DB6AC",
+  },
+  checkbox: {
+    margin: 8,
+  },
+  centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: "white",
+    borderRadius: 20,
+    padding: 35,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  buttonOpen: {
+    backgroundColor: "#F194FF",
+  },
+  buttonClose: {
+    backgroundColor: "#2196F3",
+  },
+  textStyle: {
+    color: "white",
+    fontWeight: "bold",
+    textAlign: "center",
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: "justify",
+  },
 });

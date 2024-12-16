@@ -1,18 +1,19 @@
 import { Text, TouchableOpacity, StyleSheet } from "react-native";
 import React from "react";
 import { View } from "react-native-web";
+import SelectDropdown from 'react-native-select-dropdown'
 
 
 export default function Dropdown() {
   return (
     <View >
-      <TouchableOpacity>
+      {/* <TouchableOpacity>
     
         <select style={styles.select} name="selectedBank" defaultValue="BYOND">
           <option value="BYOND">BYOND</option>
           <option value="Mandiru">Mandiru</option>
         </select>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
     </View>
   );
 }
