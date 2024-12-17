@@ -6,7 +6,7 @@ export default function Amount({ balance = 0, showBalance = false, text }) {
     <View style={styles.container}>
       <Text style={styles.placeholder}>{text}</Text>
       <View style={styles.containerv2}>
-        IDR
+        <Text>IDR</Text>
         <TextInput style={styles.Amount} keyboardType="numeric" />
       </View>
       {showBalance && (
@@ -29,20 +29,24 @@ const styles = StyleSheet.create({
   container: {
     paddingRight: 30,
     paddingLeft: 30,
+    paddingTop: 18,
+    paddingButton: 24,
 
+  
     width: "100%",
     backgroundColor: "white",
     width: "100%",
-    marginVertical: 16,
+    marginVertical: 24,
   },
   containerv2: {
     //flexWrap: "wrap",
-
+ 
     flexDirection: "row",
     alignItems: "center",
   },
   placeholder: {
     color: "#B3b3b3",
+    
   },
 
   Amount: {
@@ -53,5 +57,8 @@ const styles = StyleSheet.create({
     fontSize: 36,
     fontWeight: "400",
     textAlign: "right",
+  
+
+    
   },
 });

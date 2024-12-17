@@ -1,5 +1,5 @@
 import { Link, Stack } from "expo-router";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import {
   Image,
   Text,
@@ -7,6 +7,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   ScrollView,
+  RefreshControl ,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
@@ -30,7 +31,22 @@ function LogoTitle({ user }) {
 }
 
 export default function Home() {
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState({
+    fullname: "",
+    id: "",
+    username: "",
+    email: "",
+    wallet: { account_number: "", balance: "" },
+  });
+  const [refreshing, setRefreshing] = useState(false);
+  const onRefresh = useCallback(()=>{
+    setRefreshing(true);
+    setTimeout(()=> {
+      setRefreshing(false);
+    }, 2000)
+
+  })
+
   useEffect(() => {
     const getData = async () => {
       try {
@@ -54,7 +70,13 @@ export default function Home() {
   }, []);
   return (
     <ScrollView containerStyle={styles.container}>
-      <View style={styles.header}>
+      <View style={styles.header} contentContainerStyle={styles.scrollView}
+      refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+      }>
+        {/* hapus */}
+        <View style={styles.header}></View>
+
         <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
           <LogoTitle user={user} />
           <View>
@@ -92,22 +114,14 @@ export default function Home() {
         </View>
 
         <View style={styles.accountnumber}>
-          <Text style={{ color: "#fff", fontSize: 18 }}>Account No.</Text>
-          {user?.id && (
-            <Text style={{ fontWeight: "bold", color: "#fff", fontSize: 18 }}>
-              90013{user.id}
-            </Text>
-          )}
+          <Text style={{ color: '#fff', fontSize: 18 }}>Account No.</Text>
+          {user.wallet?.account_number && <Text style={{ fontWeight: 'bold', color: '#fff', fontSize: 18 }}>{user.wallet?.account_number}</Text>}
         </View>
 
         <View style={styles.balancebox}>
           <View>
             <Text style={{ fontSize: 20 }}>Balance</Text>
-            {user?.balance && (
-              <Text style={{ fontSize: 24, fontWeight: "bold" }}>
-                Rp{user.balance}
-              </Text>
-            )}
+            <Text style= {{fontSize : 24, fontWeight: 'bold'}}>Rp {user.wallet?.balance}</Text>
           </View>
           <View>
             <View style={{ gap: 20 }}>
@@ -257,5 +271,32 @@ const styles = StyleSheet.create({
     paddingTop: 40,
     paddingBottom: 12,
     backgroundColor: "#fff",
+  },
+  balancebox: {
+    backgroundColor: '#fff',
+    padding: 20,
+    borderRadius: 10,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+  accountnumber: {
+    paddingHorizontal: 20,
+    paddingVertical: 12,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    backgroundColor: '#19918F',
+    marginTop: 30,
+    marginBottom: 40,
+    borderRadius: 10
   },
 });
