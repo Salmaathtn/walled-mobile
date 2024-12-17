@@ -35,35 +35,34 @@ export default function App() {
       LoginSchema.parse(form);
       //coba di console
 
-     const res = await axios.post("http://172.20.10.3:8080/auth/login", form);
-    
-     await AsyncStorage.setItem("token", res.data.data.token);
-     router.replace("/(home)")
-   } catch (err) {
-     if (axios.isAxiosError(err)) {
-       if (err.response) {
-         setServerError(err.response.data.message || "An error occurred");
-       } else if (err.request) {
-         setServerError("Network error. Please try again later.");
-         console.error("Network Error:", err.request);
-       } else {
-         setServerError("An unexpected error occurred.");
-         console.error("Request Setup Error:", err.message);
-       }
-     } else if (err?.errors) {
-       const errors = {};
-       err.errors.forEach((item) => {
-         const key = item.path[0];
-         errors[key] = item.message;
-       });
-       setErrors(errors);
-     } else {
-       setServerError("An unknown error occurred.");
-       console.error("Unhandled Error:", err);
-     }
-   }
- };
+      const res = await axios.post("http://172.20.10.3:8080/auth/login", form);
 
+      await AsyncStorage.setItem("token", res.data.data.token);
+      router.replace("/(home)");
+    } catch (err) {
+      if (axios.isAxiosError(err)) {
+        if (err.response) {
+          setServerError(err.response.data.message || "An error occurred");
+        } else if (err.request) {
+          setServerError("Network error. Please try again later.");
+          console.error("Network Error:", err.request);
+        } else {
+          setServerError("An unexpected error occurred.");
+          console.error("Request Setup Error:", err.message);
+        }
+      } else if (err?.errors) {
+        const errors = {};
+        err.errors.forEach((item) => {
+          const key = item.path[0];
+          errors[key] = item.message;
+        });
+        setErrors(errors);
+      } else {
+        setServerError("An unknown error occurred.");
+        console.error("Unhandled Error:", err);
+      }
+    }
+  };
 
   return (
     <View style={styles.container}>

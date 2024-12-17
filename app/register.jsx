@@ -21,7 +21,7 @@ export default function Register() {
  
   return (
     <View style={styles.container}>
-      <Modal
+      {/* <Modal
         animationType="slide"
         transparent={true}
         visible={modalVisible}
@@ -43,7 +43,7 @@ export default function Register() {
             </Pressable>
           </View>
         </View>
-      </Modal>
+      </Modal> */}
 
       <Image source={require("../assets/logo.png")} style={styles.logo} />
 

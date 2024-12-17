@@ -8,15 +8,15 @@ export default function Layout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Home',
-          tabBarIcon: ({ color }) => <FontAwesome size={28} name="home" color="#4DB6AC" />,
+          title: 'Home', headerShown: false,
+          tabBarIcon: ({ color }) => <FontAwesome size={28} name="home" color={color} />,
         }}
       />
       <Tabs.Screen
         name="topup"
         options={{
           title: 'TopUp',
-          tabBarIcon: ({ color }) => <Entypo name="wallet" size={24} color="#4DB6AC" />,
+          tabBarIcon: ({ color }) => <Entypo name="wallet" size={24} color={color} />,
         }}
       />
       
@@ -24,7 +24,7 @@ export default function Layout() {
         name="transfer"
         options={{
           title: 'Transfer',
-          tabBarIcon: ({ color }) => <FontAwesome name="send-o" size={24} color="#4DB6AC" />,
+          tabBarIcon: ({ color }) => <FontAwesome name="send-o" size={24} color={color} />,
         }}
       />
     </Tabs>
