@@ -1,11 +1,48 @@
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, View, Text,
+  TouchableOpacity,
+  ScrollView, } from "react-native";
 import Button from "../../components/Button";
 import Input from "../../components/Input";
 import Amount from "../../components/Amount";
 import Dropdown from "../../components/Dropdown";
+import { useCallback, useEffect, useState } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import axios from "axios";
 
 
-function Topup() {
+
+export default function Topup() {
+  const [form, setForm] = useState ({ammmount: "", description: ""})
+  const [errorsMsg, setErrors] = useState({})
+  const [serverError, setServerError] = useState("")
+     const handleInputChange = (key, value) => {
+        setForm({...form, [key]: value})
+        try {
+        topUpSchema.pick({[key]: true}).parse({[key]: value})
+        setErrors((prev) => ({...prev, [key]: ""}))
+        } catch (err) {
+        setErrors((prev) => ({...prev, [key]: err.errors[0].message}))
+        }
+     const handleSubmit = async() => {
+        try {
+        topUpSchema.parse(form)
+
+        const res = await axios.post("http://172.20.10.3:8080/transactions/topup", form) 
+        await AsyncStorage.setItem("token", res.data.data.token)
+        // router.replace("/(home)")
+        } catch (err) {
+        if (err?.response) {
+            setServerError(err.response.data.message)
+            return
+        }
+        const errors = {}
+        err.errors.forEach((item) => {
+            const key = item.path[0]
+            errors[key] = item.message
+        })
+        setErrors(errors)
+    }
+    }}
  
   return (
     <View style={styles.container}>
@@ -18,7 +55,7 @@ function Topup() {
     
   );
 }
-export default Topup;
+
 
 const styles = StyleSheet.create({
   container: {

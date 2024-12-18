@@ -7,84 +7,149 @@ import {
   Text,
   Modal,
   Pressable,
+  Alert,
 } from "react-native";
 import Button from "../components/Button";
 import Input from "../components/Input";
 import { Link } from "expo-router";
 import Checkbox from "expo-checkbox";
 import { useState } from "react";
+import { z } from "zod";
+import axios from "axios";
+import { useRouter } from "expo-router";
 //import { SafeAreaView} from "react-native-safe-area-context";
 
+const RegistSchema = z.object({
+  email: z.string().email({ message: "Invalid email address" }),
+  username: z.string(),
+  password: z.string().min(8, { message: "Must be 8 or more characters long" }),
+  avatar_url: z.string(),
+  fullname: z.string(),
+});
+
 export default function Register() {
-  const [isSelected, setSelection] = useState(false);
+  const [form, setForm] = useState({
+    email: "",
+    username: "",
+    password: "",
+    avatar_url: "",
+    fullname: "",
+  });
+  const router = useRouter();
+  const [errorMsg, setErrors] = useState({});
+  const [serverError, setServerError] = useState("");
+  const [isChecked, setChecked] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
- 
+
+  const handleInputChange = (key, value) => {
+    setForm({ ...form, [key]: value });
+    try {
+      RegistSchema.pick({ [key]: true }).parse({ [key]: value });
+      setErrors((prev) => ({ ...prev, [key]: "" }));
+    } catch (err) {
+      setErrors((prev) => ({ ...prev, [key]: err.errors[0].message }));
+    }
+  };
+
+  const handleSubmit = async () => {
+    if (!isChecked) {
+      Alert.alert("Checklist first");
+      return;
+    }
+    try {
+      RegistSchema.parse(form);
+      //coba di console
+
+      const res = await axios.post(
+        "http://172.20.10.3:8080/auth/register",
+        form
+      );
+      console.log(form);
+      Alert.alert("Success");
+      router.replace("/");
+    } catch (error) {
+      console.log("test", error);
+      if (error.response) {
+        Alert.alert("Failed", "Email address already exists");
+      } else {
+        Alert.alert("Failed", "Something went wrong. Pls try again!");
+      }
+    }
+  };
+
   return (
     <View style={styles.container}>
-      {/* <Modal
-        animationType="slide"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => {
-          Alert.alert("Modal has been closed.");
-          setModalVisible(!modalVisible);
-        }}
-      >
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-            <Text style={styles.modalText}>
-             {termtext}
-            </Text>
-            <Pressable
-              style={[styles.button, styles.buttonClose]}
-              onPress={() => setModalVisible(!modalVisible)}
-            >
-              <Text style={styles.textStyle}>Hide Modal</Text>
-            </Pressable>
-          </View>
-        </View>
-      </Modal> */}
-
       <Image source={require("../assets/logo.png")} style={styles.logo} />
 
       <TextInput
         style={styles.input}
         placeholder="Fullname"
         placeholderTextColor="#aaa"
-        keyboardType="email-address"
+        onChangeText={(text) => handleInputChange("fullname", text)}
+        value={form.fullname}
       />
+      {errorMsg.fullname ? (
+        <Text style={styles.errorMsg}>{errorMsg.fullname}</Text>
+      ) : null}
+
+      <TextInput
+        style={styles.input}
+        placeholder="Username"
+        placeholderTextColor="#aaa"
+        onChangeText={(text) => handleInputChange("username", text)}
+        value={form.username}
+      />
+      {errorMsg.username ? (
+        <Text style={styles.errorMsg}>{errorMsg.username}</Text>
+      ) : null}
 
       <TextInput
         style={styles.input}
         placeholder="Email"
         placeholderTextColor="#aaa"
-        secureTextEntry={true}
+        onChangeText={(text) => handleInputChange("email", text)}
+        value={form.email}
       />
+      {errorMsg.email ? (
+        <Text style={styles.errorMsg}>{errorMsg.email}</Text>
+      ) : null}
+
       <TextInput
         style={styles.input}
         placeholder="Password"
         placeholderTextColor="#aaa"
         secureTextEntry={true}
+        onChangeText={(text) => handleInputChange("password", text)}
+        value={form.password}
       />
+      {errorMsg.password ? (
+        <Text style={styles.errorMsg}>{errorMsg.password}</Text>
+      ) : null}
+
       <TextInput
         style={styles.input}
         placeholder="Avatar url"
         placeholderTextColor="#aaa"
-        secureTextEntry={true}
+        onChangeText={(text) => handleInputChange("avatar_url", text)}
+        value={form.avatar_url}
       />
+      {errorMsg.password ? (
+        <Text style={styles.errorMsg}>{errorMsg.avatar_url}</Text>
+      ) : null}
+
       <View style={styles.tnc}>
         <Checkbox
-          value={isSelected}
-          onValueChange={setSelection}
+          value={isChecked}
+          onValueChange={setChecked}
           style={styles.checkbox}
         />
-          <Text style={styles.tncText}>I have read and agreee to the </Text>
+        <Text style={styles.tncText}>I have read and agreee to the </Text>
         <Link href="/tnc">
           <Text style={styles.tncLink}>Terms and Conditions</Text>
         </Link>
       </View>
 
-      <Button text="Register" />
+      <Button style={styles.button} handlePress={handleSubmit} text="Regist" />
 
       <Text>
         Have account?{" "}

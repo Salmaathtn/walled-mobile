@@ -92,25 +92,41 @@ export default function Home() {
   return (
     <ScrollView containerStyle={styles.container}>
       <View style={styles.header}>
-
-        <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}>
+        <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
           <LogoTitle user={user} />
           <View>
-            <Text style={{ fontSize: 18, fontWeight: 'bold', marginInline: 5 }}>{user.fullname}</Text>
-            <Text style={{ fontSize: 18, marginInline: 5 }}>Personal Account</Text>
+            <Text style={{ fontSize: 18, fontWeight: "bold", marginInline: 5 }}>
+              {user.fullname}
+            </Text>
+            <Text style={{ fontSize: 18, marginInline: 5 }}>
+              Personal Account
+            </Text>
           </View>
         </View>
 
-        <Image source={require('../../assets/suntoggle.png')} />
-
+        <Image source={require("../../assets/suntoggle.png")} />
       </View>
-      <View style={{ backgroundColor: '#FAFBFD', paddingHorizontal: 20 }}>
-        <View style={{ flexDirection: 'row', alignItems: 'center', paddingTop: 25, justifyContent: 'space-between' }}>
-          <View style={{ width: '70%' }}>
-            <Text style={{ fontSize: 22, fontWeight: 'bold', marginBottom: 8 }}>Good Morning, {user?.username}!</Text>
-            <Text style={{ fontSize: 16 }}>Check all your incoming and outgoing transactions here</Text>
+      <View style={{ backgroundColor: "#FAFBFD", paddingHorizontal: 20 }}>
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            paddingTop: 25,
+            justifyContent: "space-between",
+          }}
+        >
+          <View style={{ width: "70%" }}>
+            <Text style={{ fontSize: 22, fontWeight: "bold", marginBottom: 8 }}>
+              Good Morning, {user?.username}!
+            </Text>
+            <Text style={{ fontSize: 16 }}>
+              Check all your incoming and outgoing transactions here
+            </Text>
           </View>
-          <Image source={require('../../assets/sun.png')} style={{ width: 81, height: 77 }} />
+          <Image
+            source={require("../../assets/sun.png")}
+            style={{ width: 81, height: 77 }}
+          />
         </View>
 
         <View style={styles.accountnumber}>
