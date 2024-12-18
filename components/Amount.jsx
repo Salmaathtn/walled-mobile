@@ -1,13 +1,22 @@
-import { View, StyleSheet, Text, TextInput } from "react-native";
+import { View, StyleSheet, TextInput, Text } from "react-native";
+import { useState, useEffect } from "react";
 import Input from "./Input";
 
-export default function Amount({ balance = 0, showBalance = false, text }) {
+export default function Amount({ balance = 0,
+  showBalance = false,
+  marginTop = 0,
+  marginBottom = 0,
+  value,
+  setValue }) {
   return (
     <View style={styles.container}>
       <Text style={styles.placeholder}>{text}</Text>
       <View style={styles.containerv2}>
         <Text>IDR</Text>
-        <TextInput style={styles.Amount} keyboardType="numeric" />
+        <TextInput style={styles.Amount}  placeholder="100.000"
+          keyboardType="number-pad"
+          value={value}
+          onChangeText={(text) => setValue(text)} />
       </View>
       {showBalance && (
         <View
